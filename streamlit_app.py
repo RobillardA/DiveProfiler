@@ -105,7 +105,7 @@ IMAGE_TYPES = ["png", "jpg"]
 EXTERNAL_DEPENDENCIES = {
     "DPAStandard2_4.pkl": {
         "url": "https://www.dropbox.com/s/stlxaoem5mchokc/DPAStandard2_4.pkl?dl=1",
-        "size": 87470080
+        "size": 87468167
     }
 }
 
