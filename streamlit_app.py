@@ -56,7 +56,7 @@ def load_model():
     plt = platform.system()
 
     if plt == 'Linux' or plt == 'Darwin': pathlib.WindowsPath = pathlib.PosixPath
-    inf_model = load_learner('perumixed3.pkl', cpu=True)
+    inf_model = load_learner('DPAStandard2_4.pkl', cpu=True)
 
     return inf_model
 
@@ -103,9 +103,9 @@ def download_file(file_path):
 IMAGE_TYPES = ["png", "jpg"]
 
 EXTERNAL_DEPENDENCIES = {
-    "perumixed3.pkl": {
-        "url": "https://www.dropbox.com/s/31e6wuwrlm66sco/perumixed3.pkl?dl=1",
-        "size": 179319095
+    "DPAStandard2_4.pkl": {
+        "url": "https://www.dropbox.com/s/stlxaoem5mchokc/DPAStandard2_4.pkl?dl=1",
+        "size": 87470080
     }
 }
 
