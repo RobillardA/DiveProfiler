@@ -9,14 +9,14 @@ from PIL import ImageOps
 import pathlib
 
 def main():
-    st.title('Peru Fish Classifier')
+    st.title('Dive Finder')
 
     for filename in EXTERNAL_DEPENDENCIES.keys():
         download_file(filename)
     
     model = load_model()
     
-    st.markdown("Fish photo for classification.")
+    st.markdown("Dive Image for Classification.")
     image = st.file_uploader("", IMAGE_TYPES)
     if image:
         image_data = image.read()
