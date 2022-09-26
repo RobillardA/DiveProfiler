@@ -20,7 +20,7 @@ def main():
     image = st.file_uploader("", IMAGE_TYPES, accept_multiple_files = True)
     for x in image:    
         if image:
-            image_data = image.imread()
+            image_data = x.imread()
             st.image(image_data, use_column_width=True)
 
             prediction = model.predict(image_data)
