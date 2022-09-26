@@ -27,8 +27,8 @@ def main():
 
                 prediction = model.predict(image_data)
         
-            pred_df = predictions_to_df(prediction, classes = model.dls.vocab)
-            st.dataframe(pred_df, use_container_width=True)
+                pred_df = predictions_to_df(prediction, classes = model.dls.vocab)
+                st.dataframe(top_probs, use_container_width=True)
 
 def predictions_to_df(prediction, classes):
     pred_rows = []
@@ -38,9 +38,9 @@ def predictions_to_df(prediction, classes):
         pred_rows.append(pred_row)
     pred_df = pd.DataFrame(pred_rows)
     pred_df.head()
-    top_probs = pred_df.sort_values('probability', ascending=False).head(4)
+    top_probs = pred_df.sort_values('probability', ascending=False).head(3)
 
-    return df    
+    return top_probs    
 
 plt = platform.system()
 print(plt)
