@@ -20,7 +20,7 @@ def main():
     image = st.file_uploader("", IMAGE_TYPES, accept_multiple_files = True)
     
     if image:   
-        for image in images:
+#        for image in images:
             with Image.open(image) as img:
                 image_data = img.imread()
 #               st.image(image_data, use_column_width=True)
@@ -28,7 +28,7 @@ def main():
                 prediction = model.predict(image_data)
         
                 pred_df = predictions_to_df(prediction, classes = model.dls.vocab)
-            st.dataframe(top_probs, use_container_width=True)
+                st.dataframe(top_probs, use_container_width=True)
 
 def predictions_to_df(prediction, classes):
     pred_rows = []
