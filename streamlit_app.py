@@ -20,15 +20,15 @@ def main():
     image = st.file_uploader("", IMAGE_TYPES, accept_multiple_files = True)
        
     if image:
-    for image in images:
+        for image in images:
             with Image.open(image) as img:
-            image_data = img.imread()
-            st.image(image_data, use_column_width=True)
+                image_data = img.imread()
+                st.image(image_data, use_column_width=True)
 
-            prediction = model.predict(image_data)
+                prediction = model.predict(image_data)
         
-            pred_chart = predictions_to_chart(prediction, classes = model.dls.vocab)
-            st.altair_chart(pred_chart, use_container_width=True)
+                pred_chart = predictions_to_chart(prediction, classes = model.dls.vocab)
+                st.altair_chart(pred_chart, use_container_width=True)
 
 def predictions_to_chart(prediction, classes):
     pred_rows = []
