@@ -40,7 +40,7 @@ def predictions_to_df(prediction, classes):
     pred_df.head()
     top_probs = pred_df.sort_values('probability', ascending=False).head(3)
 
-    return top_probs    
+    return dataframe    
 
 plt = platform.system()
 print(plt)
