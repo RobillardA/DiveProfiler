@@ -39,7 +39,7 @@ def predictions_to_df(prediction, classes):
     pred_df = pd.DataFrame(pred_rows)
     pred_df.head()
     top_probs = pred_df.sort_values('probability', ascending=False).head(4)
-    )
+
     return df    
 
 plt = platform.system()
