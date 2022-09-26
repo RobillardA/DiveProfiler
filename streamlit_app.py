@@ -23,12 +23,12 @@ def main():
         for image in images:
             with Image.open(image) as img:
                 image_data = img.imread()
-                st.image(image_data, use_column_width=True)
+#               st.image(image_data, use_column_width=True)
 
                 prediction = model.predict(image_data)
         
                 pred_df = predictions_to_df(prediction, classes = model.dls.vocab)
-                st.dataframe(top_probs, use_container_width=True)
+            st.dataframe(top_probs, use_container_width=True)
 
 def predictions_to_df(prediction, classes):
     pred_rows = []
