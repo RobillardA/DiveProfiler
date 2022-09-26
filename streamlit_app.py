@@ -7,7 +7,6 @@ import urllib
 import pathlib
 from PIL import ImageOps
 import pathlib
-import cv2
 
 def main():
     st.title('Dive Finder')
