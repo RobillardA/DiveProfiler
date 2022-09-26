@@ -7,6 +7,7 @@ import urllib
 import pathlib
 from PIL import ImageOps
 import pathlib
+import cv2
 
 def main():
     st.title('Dive Finder')
@@ -17,9 +18,9 @@ def main():
     model = load_model()
     
     st.markdown("Dive Image for Classification.")
-    image = st.file_uploader(accept_multiple_files = True, "", IMAGE_TYPES)
-    if image:
-        image_data = image.read()
+    image = st.file_uploader("", IMAGE_TYPES, accept_multiple_files = True)
+    for x in image:
+        image_data = x.imread()
         st.image(image_data, use_column_width=True)
 
         prediction = model.predict(image_data)
