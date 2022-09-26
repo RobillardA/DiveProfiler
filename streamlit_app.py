@@ -27,10 +27,10 @@ def main():
 
                 prediction = model.predict(image_data)
         
-            pred_chart = predictions_to_chart(prediction, classes = model.dls.vocab)
-            st.altair_chart(pred_chart, use_container_width=True)
+            pred_df = predictions_to_df(prediction, classes = model.dls.vocab)
+            st.dataframe(pred_df, use_container_width=True)
 
-def predictions_to_chart(prediction, classes):
+def predictions_to_df(prediction, classes):
     pred_rows = []
     for i, conf in enumerate(list(prediction[2])):
         pred_row = {'class': classes[i],
@@ -39,16 +39,8 @@ def predictions_to_chart(prediction, classes):
     pred_df = pd.DataFrame(pred_rows)
     pred_df.head()
     top_probs = pred_df.sort_values('probability', ascending=False).head(4)
-    chart = (
-        alt.Chart(top_probs)
-        .mark_bar()
-        .encode(
-            x=alt.X("probability:Q", scale=alt.Scale(domain=(0, 100))),
-            y=alt.Y("class:N",
-                    sort=alt.EncodingSortField(field="probability", order="descending"))
-        )
     )
-    return chart    
+    return df    
 
 plt = platform.system()
 print(plt)
