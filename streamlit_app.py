@@ -17,7 +17,7 @@ def main():
     model = load_model()
     
     st.markdown("Dive Image for Classification.")
-    image = st.file_uploader("", accept_multiple_files = True, IMAGE_TYPES)
+    image = st.file_uploader("", IMAGE_TYPES, accept_multiple_files = True)
     if image:
         image_data = image.read()
         st.image(image_data, use_column_width=True)
