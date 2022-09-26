@@ -18,6 +18,7 @@ def main():
     
     st.markdown("Dive Image for Classification.")
     image = st.file_uploader("", IMAGE_TYPES, accept_multiple_files = True)
+    if image:
     for x in image:
         image_data = x.imread()
         st.image(image_data, use_column_width=True)
