@@ -21,10 +21,10 @@ def main():
     
     if images:
         for image in images:
-            with open_image(image) as img:
+            with Image.open(image) as img:
                 st.image(img, use_column_width=True)
-
-                prediction = model.predict(img)
+                img_pil = PILImage.create(uploader.data[0])
+                prediction = model.predict(img_pil)
 
                 pred_df = predictions_to_df(prediction, classes = model.dls.vocab)
                 st.dataframe(top_probs, use_container_width=True)
