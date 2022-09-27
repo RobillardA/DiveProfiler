@@ -23,7 +23,7 @@ def main():
         for image in images:
             with Image.open(image) as img:
                 st.image(img, use_column_width=True)
-                img_pil = PILImage.create(uploader.data[0])
+                img_pil = PILImage.create(img)
                 prediction = model.predict(img_pil)
 
                 pred_df = predictions_to_df(prediction, classes = model.dls.vocab)
