@@ -23,7 +23,7 @@ def main():
         for image in images:
             with Image.open(image) as img:
                 st.image(img, use_column_width=True)
-                prediction = model.predict(img)
+                prediction = model.predict(image)
                 pred_df = predictions_to_df(prediction, classes = model.dls.vocab)
                 st.dataframe(top_probs, use_container_width=True)
 
@@ -37,7 +37,7 @@ def predictions_to_df(prediction, classes):
     pred_df.head()
     top_probs = pred_df.sort_values('probability', ascending=False).head(3)
 
-    return df    
+    return df
 
 plt = platform.system()
 print(plt)
