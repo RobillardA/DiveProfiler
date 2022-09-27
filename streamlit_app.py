@@ -21,7 +21,7 @@ def main():
     
     if images:
         for image in images:
-            with Image.open(image) as img:
+            with open_image(image) as img:
                 st.image(img, use_column_width=True)
 
                 prediction = model.predict(img)
