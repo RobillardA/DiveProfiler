@@ -5,7 +5,7 @@ import pandas as pd
 import os
 import urllib
 import pathlib
-from PIL import ImageOps
+from PIL import ImageOps, Image
 import pathlib
 
 def main():
@@ -17,14 +17,14 @@ def main():
     model = load_model()
     
     st.markdown("Dive Image for Classification.")
-    image = st.file_uploader("", IMAGE_TYPES, accept_multiple_files = True)
+    images = st.file_uploader("", IMAGE_TYPES, accept_multiple_files = True)
     
-    if image:
-        for images in image:
-            with Image.open(images) as img:
+    if images:
+        for image in images:
+            with Image.open(image) as img:
                 image_data = img.imread()
-                st.image(image_data, use_column_width=True)
-                prediction = model.predict(image_data)
+                st.image(img, use_column_width=True)
+                prediction = model.predict(img)
                 pred_df = predictions_to_df(prediction, classes = model.dls.vocab)
                 st.dataframe(top_probs, use_container_width=True)
 
@@ -38,7 +38,7 @@ def predictions_to_df(prediction, classes):
     pred_df.head()
     top_probs = pred_df.sort_values('probability', ascending=False).head(3)
 
-    return dataframe    
+    return df    
 
 plt = platform.system()
 print(plt)
