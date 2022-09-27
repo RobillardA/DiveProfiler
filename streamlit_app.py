@@ -17,12 +17,11 @@ def main():
     model = load_model()
     
     st.markdown("Dive Image for Classification.")
-    images = st.file_uploader("", IMAGE_TYPES, accept_multiple_files = True)
+    images = st.sidebar.file_uploader("", IMAGE_TYPES, accept_multiple_files = True)
     
     if images:
         for image in images:
             with Image.open(image) as img:
-                image_data = img.imread()
                 st.image(img, use_column_width=True)
                 prediction = model.predict(img)
                 pred_df = predictions_to_df(prediction, classes = model.dls.vocab)
