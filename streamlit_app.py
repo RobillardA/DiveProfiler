@@ -24,7 +24,7 @@ def main():
             with Image.open(image) as img:
                 st.image(img, use_column_width=True)
 
-                prediction = model.predict(image)
+                prediction = model.predict(img)
 
                 pred_df = predictions_to_df(prediction, classes = model.dls.vocab)
                 st.dataframe(top_probs, use_container_width=True)
