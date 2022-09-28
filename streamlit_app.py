@@ -20,27 +20,41 @@ def main():
     images = st.sidebar.file_uploader("", IMAGE_TYPES, accept_multiple_files = True)
     
     if images:
-        for image in images:
-            with Image.open(image) as img:
-                st.image(img, use_column_width=True)
-                img_open = open_image(img)
-                prediction = model.predict(img_open)
+        fnames = get_image_files(images)
+        dl = model.dls.test_dl(fnames[:])
+        st.image(fnames[:], use_column_width=True)
+#       img_open = open_image(img)
+#       prediction = model.predict(img_open)
+        #get preds for batch
+        pred_tensor, ignored, preds = model.get_preds(dl=dl, with_decoded=True)
+        pred_df = batch_preds(prediction, classes = model.dls.vocab)
+        st.dataframe(pred_df, use_container_width=True)
 
-                pred_df = predictions_to_df(prediction, classes = model.dls.vocab)
-                
-                st.dataframe(top_probs, use_container_width=True)
+#       pred_df = predictions_to_df(prediction, classes = model.dls.vocab)
 
-def predictions_to_df(prediction, classes):
-    pred_rows = []
-    for i, conf in enumerate(list(prediction[2])):
-        pred_row = {'class': classes[i],
-                    'probability': round(float(conf) * 100,2)}
-        pred_rows.append(pred_row)
-    pred_df = pd.DataFrame(pred_rows)
-    pred_df.head()
-    top_probs = pred_df.sort_values('probability', ascending=False).head(3)
 
-    return top_probs
+def batch_preds (prediction, classes):
+    for index,item in enumerate(pred_tensor):
+            prediction = model.dls.categorize.decode(np.argmax(item)).upper()
+            confidence = max(item)
+            percent = float(confidence)
+            label_name = (str(fnames[index]).split("\\")[-1])
+            pred_list = print(f"{prediction},{percent*100:.2f}%,{label_name}")
+            top_probs = pd.DataFrame(pred_list)
+            
+            return top_probs
+            
+#def predictions_to_df(prediction, classes):
+#    pred_rows = []
+#    for i, conf in enumerate(list(prediction[2])):
+#        pred_row = {'class': classes[i],
+#                    'probability': round(float(conf) * 100,2)}
+#        pred_rows.append(pred_row)
+#    pred_df = pd.DataFrame(pred_rows)
+#    pred_df.head()
+#    top_probs = pred_df.sort_values('probability', ascending=False).head(3)
+
+#    return top_probs
 
 plt = platform.system()
 print(plt)
