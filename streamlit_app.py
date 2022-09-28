@@ -23,11 +23,12 @@ def main():
         for image in images:
             with Image.open(image) as img:
                 st.image(img, use_column_width=True)
-                img_pil = PILImage.create(img)
-                prediction = model.predict(img_pil)
+                img_open = open_image(img)
+                prediction = model.predict(img_open)
 
                 pred_df = predictions_to_df(prediction, classes = model.dls.vocab)
-                st.dataframe(top_probs, use_container_width=True)
+                
+     st.dataframe(top_probs, use_container_width=True)
 
 def predictions_to_df(prediction, classes):
     pred_rows = []
