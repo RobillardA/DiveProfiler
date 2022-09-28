@@ -9,20 +9,20 @@ from PIL import ImageOps, Image
 import pathlib
 
 def main():
-    st.title('Identifica tu carey [BETA]')
+    st.title('Dive Profiler')
 
     for filename in EXTERNAL_DEPENDENCIES.keys():
         download_file(filename)
     
     model = load_model()
     
-    st.markdown("Turtle Image for classification.")
+    st.markdown("Select Dive for Calssification")
     image = st.file_uploader("", IMAGE_TYPES)
     if image:
         image_data = image.read()
         st.image(image_data, use_column_width=True)
 
-        prediction = model.predict(image_data)
+        prediction = model.pred_batch(image_data)
         
         pred_chart = predictions_to_chart(prediction, classes = model.dls.vocab)
         st.altair_chart(pred_chart, use_container_width=True)
