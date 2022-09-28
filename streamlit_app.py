@@ -9,28 +9,25 @@ from PIL import ImageOps, Image
 import pathlib
 
 def main():
-    st.title('Dive Finder')
+    st.title('Identifica tu carey [BETA]')
 
     for filename in EXTERNAL_DEPENDENCIES.keys():
         download_file(filename)
     
     model = load_model()
     
-    st.markdown("Dive Image for Classification.")
-    images = st.sidebar.file_uploader("", IMAGE_TYPES, accept_multiple_files = True)
-    
-    if images:
-        for image in images:
-            with Image.open(image) as img:
-                st.image(img, use_column_width=True)
-                img_open = open_image(img)
-                prediction = model.predict(img_open)
+    st.markdown("Turtle Image for classification.")
+    image = st.file_uploader("", IMAGE_TYPES)
+    if image:
+        image_data = image.read()
+        st.image(image_data, use_column_width=True)
 
-                pred_df = predictions_to_df(prediction, classes = model.dls.vocab)
-                
-                st.dataframe(top_probs, use_container_width=True)
+        prediction = model.predict(image_data)
+        
+        pred_chart = predictions_to_chart(prediction, classes = model.dls.vocab)
+        st.altair_chart(pred_chart, use_container_width=True)
 
-def predictions_to_df(prediction, classes):
+def predictions_to_chart(prediction, classes):
     pred_rows = []
     for i, conf in enumerate(list(prediction[2])):
         pred_row = {'class': classes[i],
@@ -38,9 +35,17 @@ def predictions_to_df(prediction, classes):
         pred_rows.append(pred_row)
     pred_df = pd.DataFrame(pred_rows)
     pred_df.head()
-    top_probs = pred_df.sort_values('probability', ascending=False).head(3)
-
-    return top_probs
+    top_probs = pred_df.sort_values('probability', ascending=False).head(4)
+    chart = (
+        alt.Chart(top_probs)
+        .mark_bar()
+        .encode(
+            x=alt.X("probability:Q", scale=alt.Scale(domain=(0, 100))),
+            y=alt.Y("class:N",
+                    sort=alt.EncodingSortField(field="probability", order="descending"))
+        )
+    )
+    return chart    
 
 plt = platform.system()
 print(plt)
