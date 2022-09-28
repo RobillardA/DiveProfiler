@@ -22,7 +22,7 @@ def main():
     if images:
         fnames = get_image_files(images)
         dl = model.dls.test_dl(fnames[:])
-        st.image(fnames[:], use_column_width=True)
+        st.image(images, use_column_width=True)
 #       img_open = open_image(img)
 #       prediction = model.predict(img_open)
         #get preds for batch
