@@ -28,7 +28,7 @@ def main():
 
                 pred_df = predictions_to_df(prediction, classes = model.dls.vocab)
                 
-     st.dataframe(top_probs, use_container_width=True)
+                st.dataframe(top_probs, use_container_width=True)
 
 def predictions_to_df(prediction, classes):
     pred_rows = []
